@@ -182,7 +182,7 @@ public class JavaListFragment extends Fragment {
             AsyncTask.execute(new Runnable() {
                 @Override
                 public void run() {
-                    if(method.equals("POST") && param != null) {
+                    if(!method.equals("GET") && param != null) {
                         con.setDoOutput(true);
                         try {
                             OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream());

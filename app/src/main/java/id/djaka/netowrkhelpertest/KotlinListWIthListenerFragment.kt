@@ -130,7 +130,7 @@ class KotlinListWIthListenerFragment : Fragment() {
 
         try {
             AsyncTask.execute {
-                if (method == "POST") {
+                if (method != "GET") {
                     con.doOutput = true
 
                     val out = OutputStreamWriter(con.outputStream)

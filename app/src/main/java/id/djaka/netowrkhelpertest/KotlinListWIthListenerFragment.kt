@@ -55,16 +55,29 @@ class KotlinListWIthListenerFragment : Fragment() {
         val obj = JSONObject()
         obj.put(Keys.NAME_KEY, name)
         obj.put(Keys.JOB_KEY, job)
-        networkHelper(url, "POST", OnRequestFinished {
-            onPostUserResponse(it)
+        networkHelper(url, "POST", object : OnRequestFinished {
+            override fun onSuccess(jsonResponse: String) {
+                onPostUserResponse(jsonResponse)
+            }
+
+            override fun onError(errorCode: Int) {
+                showError(errorCode)
+            }
         }, obj)
     }
 
     private fun prepareData() {
         val url = URL("https://reqres.in/api/users")
 
-        networkHelper(url, "GET", OnRequestFinished {
-            onGetUserListResponse(it)
+        networkHelper(url, "GET", object: OnRequestFinished {
+            override fun onSuccess(jsonResponse: String) {
+                onGetUserListResponse(jsonResponse)
+            }
+
+            override fun onError(errorCode: Int) {
+                showError(errorCode)
+            }
+
         })
     }
 
@@ -147,7 +160,7 @@ class KotlinListWIthListenerFragment : Fragment() {
                     }
                 } else {
                     activity?.runOnUiThread{
-                        showError(responseCode)
+                        onComplete.onError(responseCode)
                     }
                 }
             }

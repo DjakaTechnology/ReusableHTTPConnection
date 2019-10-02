@@ -81,6 +81,11 @@ public class JavaListFragment extends Fragment {
                 public void onSuccess(String jsonResponse) {
                     onPostUserResponse(jsonResponse);
                 }
+
+                @Override
+                public void onError(int errorCode) {
+                    showError(errorCode);
+                }
             }, obj);
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -96,6 +101,11 @@ public class JavaListFragment extends Fragment {
                 @Override
                 public void onSuccess(String jsonResponse) {
                     onGetUserListResponse(jsonResponse);
+                }
+
+                @Override
+                public void onError(int errorCode) {
+                    showError(errorCode);
                 }
             }, null);
         } catch (MalformedURLException e) {
@@ -217,7 +227,7 @@ public class JavaListFragment extends Fragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                showError(finalResponseCode);
+                                onRequestFinished.onError(finalResponseCode);
                             }
                         });
                     }
